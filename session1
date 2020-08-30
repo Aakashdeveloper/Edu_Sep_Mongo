@@ -1,0 +1,84 @@
+NoSQl
+It is not a sql 
+
+SchemaLess
+> Application driven database
+>JSON
+  >JavaScript Object Notation
+
+sql
+
+Sno | Hindi  | English | Computer
+1   | 80     |         |
+2   |        |  80     |
+3   | 80     |         | 80
+
+MongoDB
+
+[
+   {
+       sno:1,
+       hindi:80
+   },
+   {
+       sno:2,
+       english:80
+   },
+   {
+       sno:3,
+       hindi:80,
+       Computer:80
+   }
+]
+
+//////////////////////////////////
+Sql               NoSQl
+database          database
+table             collection
+row               document
+Mysql/Postgress   MongoDb/ArangoDB
+
+fullstack
+MEAN STACK > Mongo Express Angular Node
+MERN STACK > Mongo Express React   Node
+
+
+/////////////////////////////////////
+Setup 
+
+>setup Local mongodb server
+>Setup over cloud
+    > MongoDB ATLAS (own cloud setup)
+    > Setting yourself on cloud
+
+> mongo console (cmd/terminal)
+> mongo compass
+
+
+
+//////////////////////////////
+Setup to start mongodb server & console
+//////////////////////////////
+Window
+> open the cmd/terminal
+> go to bin folder (C:\Program Files\MongoDB\Server\3.6\bin)
+> type mongod  (this will start mongodb on default port 27017)
+
+> open the second cmd/terminal
+> go to bin folder (C:\Program Files\MongoDB\Server\3.6\bin)
+> type mongo (this will start mongo console)
+.................................
+Mac
+> Open Terminal
+> sudo mongod --dbpath /System/Volumes/Data/data/db
+> Open Terminal
+> mongo
+..................................
+linux
+> Open Terminal
+> sudo mongod --dbpath /data/db
+> Open Terminal
+> mongo
+
+
+
