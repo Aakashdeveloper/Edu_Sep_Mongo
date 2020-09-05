@@ -1,0 +1,143 @@
+database
+
+>>>>.to see all database
+# show dbs 
+(admin,config,local) is default database)
+
+>>>>to go inside db 
+# use edurekainternship
+
+>>>>To see all collections
+# show collections
+
+>>>>To See all the data in collections
+#  db.city.find()
+(select * from city)
+
+>>>>To Create New db
+# use sepmongomrng
+
+>>>> insert one record
+db.first.insert({name:'Peter',"marks":80})
+{ "_id" : ObjectId("5f52f38d18602bc86b2e6827"), "name" : "Peter", "marks" : 80 }
+{ "_id" : ObjectId("5f52f4a416966588957416dd"), "name" : "John", "marks" : 70 }
+{ "_id" : ObjectId("5f52f4b916966588957416de"), "name" : "Zoe", "marks" : 70 }
+{ "_id" : ObjectId("5f52f53716966588957416df"), "name" : "Zoe", "marks" : 70 }
+
+db.first.insert({_id:"hi",name:'Peter',"marks":80})
+{ "_id" : 1, "name" : "Peter", "marks" : 80 }
+{ "_id" : 1, "name" : "Peter", "marks" : 80 }
+{ "_id" : "hi", "name" : "Peter", "marks" : 80 }
+
+12 byte( ObjectId("5f52f38d18602bc86b2e6827"))
+4=> represeting the seconds
+3=> machine identifier
+2=> process id
+3=> counter
+
+
+db.first.insert({_id:"hi ",name:'Peter John',"marks":80})
+db.first.insert({_id:"hi",'name ':'Peter',"marks":80})
+
+
+>>>To Create empty collections
+db.createCollection("second")
+https://docs.mongodb.com/manual/reference/method/db.createCollection/
+
+>>>>control schema from appliaction
+mongose
+
+db.second.insertMany([
+    {_id:1,city:'Delhi',country:"India"},
+    {_id:2,city:'Mumbai',country:"India"},
+    {_id:3,city:'Paris',country:"France"},
+    {_id:4,city:'Nice',country:"France"},
+    {_id:5,city:'London',country:"UK"},
+    {_id:6,city:'Newyork',country:"USA"}
+])
+db.second.insert({_id:7,city:'',country:"India"})
+
+db.second.find({condition},{project})
+
+db.second.find({country:"India"})   <<<< condition
+db.second.find({country:"India"},{city:1,_id:0})  <<<< condition+projection
+db.second.find({},{city:1,_id:0}) 
+db.second.find({}) 
+
+/////////////////////////////////////
+>>>>FLAT<<<<<
+{
+    _id:ObjectId("546bu65vwy566"),
+    name:"Kevin",
+    city:"Newyork"
+}
+
+>>>>>>>Embeded<<<<<<<
+>>One to one
+{
+    _id:ObjectId("546bu65vwy566"),
+    name:"Kevin",
+    city:"Newyork",
+    address:{
+        street:"879 walking street",
+        city:"Newyork",
+        pobox:7878
+    }
+}
+
+>>One to Many
+{
+    _id:ObjectId("546bu65vwy566"),
+    name:"Kevin",
+    city:"Newyork",
+    address:[
+        {
+            street:"879 walking street",
+            city:"Newyork",
+            pobox:7878
+        },
+        {
+            street:"Ev4 WhiteChappel",
+            city:"London",
+            pobox:"UI978"
+        }
+    ]
+}
+
+db.hotels.count()
+db.hotels.count({city:"1"})
+db.hotels.find({city:"1"},{name:1})
+
+db.hotels.find({$or:[{city:"1"},{city:"4"}]},{name:1,city_name:1}).pretty()
+db.hotels.find({$and:[{city:"1"},{city:"4"}]},{name:1,city_name:1}).pretty()
+
+db.hotels.find({city:"1"},{type:0,tripType:0})
+
+db.hotels.find({city:"1"},{name:1,"city_name":1,"city":1,"locality":1,"thumb":1,"cost":1,"address":1}).pretty()
+
+/Wrong/ db.hotels.find({$gt:{cost:8000}})
+db.hotels.find({cost:{$gt:8000}})
+
+db.hotels.find({cost:{$gte:8000,$lt:9000}})
+
+db.hotels.find({"type.roomtype":"1"}).count()
+
+db.hotels.find({$and:[{"type.roomtype":"1"},{"type.roomtype":"4"}]}).count()
+
+db.hotels.find({"tripType.name":{$in:['Luxury','Travel']}})
+
+db.hotels.find({"tripType.name":{$nin:['Luxury','Travel']}})
+
+db.hotels.find({cost:{$gt:8000,$ne:8399}})
+
+db.hotels.find({cost:{$gt:8000,$eq:8399}})
+
+db.hotels.findOne({city:"4"})
+
+db.hotels.find({},{name:1,cost:1}).sort({cost:1}).pretty()
+
+cost:1 > ascending
+cost:-1 > descending order
+
+db.hotels.find({},{name:1,cost:1}).sort({cost:1}).limit(5)
+db.hotels.find({},{name:1,cost:1}).sort({cost:1}).skip(5).limit(5)
