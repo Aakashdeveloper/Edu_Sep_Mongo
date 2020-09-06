@@ -1,0 +1,290 @@
+db.products.insert({_id:"itemid",seqValue:0})
+
+function getSequenceNetValue(seqName){
+    var seqDoc = db.products.findAndModify({
+        query:{_id: seqName},
+        update:{$inc:{seqValue:1}},
+        new:true
+    })
+
+    return seqDoc.seqValue
+}
+
+db.products.insert({
+    _id:getSequenceNetValue("itemid"),
+    name:'Table',
+    cost:7868
+})
+
+db.products.insert({
+    _id:getSequenceNetValue("itemid"),
+    name:'Laptop',
+    cost:47868
+})
+
+db.products.insert({
+    _id:getSequenceNetValue("itemid"),
+    name:'Mouse',
+    cost:868
+})
+
+db.products.insert({
+    _id:6,
+    name:'Fan',
+    cost:868
+})
+
+db.products.insert({
+    _id:getSequenceNetValue("itemid"),
+    name:'car',
+    cost:686868
+})
+
+db.products.insert({
+    _id:getSequenceNetValue("itemid"),
+    name:'Bike',
+    cost:686868
+})
+
+db.products.insert({
+    _id:getSequenceNetValue("itemid"),
+    name:'Cycle',
+    cost:6868
+})
+
+///////////////////////////
+update > put/patch
+upsert > update + insert
+
+ {
+        "_id": 3,
+        "city_name":"Pune",
+        "city": 4,
+        "country_name":"India"
+    }
+
+db.collection.update(
+    <query>,
+    <update>,
+    {
+        upsert:true,
+        multi:true
+    }
+)
+
+
+
+db.roomtype.update(
+    {_id:5},
+    {
+        $set:{
+           "roomtype" : "5",
+           name:"Budget Room" 
+        }
+    },
+    {
+        upsert:true
+    }
+)
+
+
+db.hotels.update(
+    {_id:"1"},
+    {
+        $set:{
+            "type.2.name":"Premium Room"
+        }
+    }
+)
+
+["Delhi","Mumbai","Amsterdam"]
+a[0]
+"Delhi"
+a[1]
+"Mumbai"
+a[2]
+"Amsterdam"
+
+db.hotels.update(
+    {"type.roomtype":"2"},
+    {
+        $set:{
+            "type.2.name":"Premium Room"
+        }
+    },
+    {
+        multi:true
+    }
+)
+
+db.hotels.update(
+    {"_id":"2"},
+    {   
+        $mul:{cost:2}
+    }
+)
+
+$divide
+$inc
+
+db.hotels.update(
+    {"_id":"1"},
+    {
+        $unset:{
+            "type.2.name":"",
+            "type.2.roomtype":""
+        }
+    }
+)
+
+cost:{$sum:{$mul:{cost,2}}}
+
+
+db.city.insert({
+	 "_id": 2,
+        "city_name":"Mumbai",
+        "city": 2,
+        "country_name":"India",
+    "date":new Date(Date.now())
+})
+
+
+db.city.update(
+    {"_id": 2},
+    {
+        $set:{"city_name":"Mumbais"},
+        $setOnInsert:{dataAdded: new Date()}
+    },
+    {upsert:true}
+)
+
+db.order.insert({_id:1,"ordercity":"London","OrderDateTime":ISODate("2020-05-20")});
+db.order.insert({_id:2,"ordercity":"Nice","OrderDateTime":ISODate("2020-05-14")});
+db.order.insert({_id:3,"ordercity":"Paris","OrderDateTime":ISODate("2020-05-11")});
+db.order.insert({_id:4,"ordercity":"Amsterdam","OrderDateTime":ISODate("2020-05-26")});
+
+db.order.find({"OrderDateTime":{$gte:ISODate("2020-05-15"),$lte:ISODate("2020-05-30")}}).pretty()
+
+////Delete
+
+db.order.remove({_id:2})
+
+db.order.remove({})
+
+
+//delete collection
+db.order.drop()
+
+//delete database
+use dbname
+db.dropDatabase()
+
+
+/////////////////Lookups//////////
+db.orders.insert([
+   { "_id" : 1, "item" : "almonds", "price" : 12, "quantity" : 2 },
+   { "_id" : 2, "item" : "pecans", "price" : 20, "quantity" : 1 },
+   { "_id" : 3  }
+])
+
+db.inventory.insert([
+   { "_id" : 1, "sku" : "almonds", description: "product 1", "instock" : 120 },
+   { "_id" : 2, "sku" : "bread", description: "product 2", "instock" : 80 },
+   { "_id" : 3, "sku" : "cashews", description: "product 3", "instock" : 60 },
+   { "_id" : 4, "sku" : "pecans", description: "product 4", "instock" : 70 },
+   { "_id" : 5, "sku": null, description: "Incomplete" },
+   { "_id" : 6 }
+])
+
+///////////
+Select *, combine_data from orders where combine_data IN(Select * from inventory where sku = orders.item)
+
+db.orders.aggregate([
+    {
+        $lookup:
+        {
+            from:'inventory',
+            localField:"item",
+            foreignField:"sku",
+            as:"combine_data"
+        }
+    }
+]).pretty()
+
+
+db.classes.insert( [ 
+    { _id: 1, title: "Reading is ...", enrollmentlist: [ "giraffe2", "pandabear", "artie" ], days: ["M", "W", "F"] }, 
+    { _id: 2, title: "But Writing ...", enrollmentlist: [ "giraffe1", "artie" ], days: ["T", "F"] } ])
+
+db.members.insert( [
+     { _id: 1, name: "artie", joined: new Date("2016-05-01"), status: "A" }, 
+     { _id: 2, name: "giraffe", joined: new Date("2017-05-01"), status: "D" }, 
+     { _id: 3, name: "giraffe1", joined: new Date("2017-10-01"), status: "A" }, 
+     { _id: 4, name: "panda", joined: new Date("2018-10-11"), status: "A" }, 
+     { _id: 5, name: "pandabear", joined: new Date("2018-12-01"), status: "A" }, 
+     { _id: 6, name: "giraffe2", joined: new Date("2018-12-01"), status: "D" } 
+])
+
+
+db.classes.aggregate([
+    {
+        $lookup:
+        {
+            from:"members",
+            localField:'enrollmentlist',
+            foreignField:"name",
+            as:"student_info"
+        }
+    }
+])
+
+//////////
+db.orders.insert([ 
+    { "_id" : 1, "item" : "almonds", "price" : 12, "ordered" : 2 }, 
+    { "_id" : 2, "item" : "pecans", "price" : 20, "ordered" : 1 }, 
+    { "_id" : 3, "item" : "cookies", "price" : 10, "ordered" : 60 } ])
+
+
+db.warehouses.insert([
+     { "_id" : 1, "stock_item" : "almonds", warehouse: "A", "instock" : 120 },
+      { "_id" : 2, "stock_item" : "pecans", warehouse: "A", "instock" : 80 }, 
+      { "_id" : 3, "stock_item" : "almonds", warehouse: "B", "instock" : 60 }, 
+      { "_id" : 4, "stock_item" : "cookies", warehouse: "B", "instock" : 40 },
+       { "_id" : 5, "stock_item" : "cookies", warehouse: "A", "instock" : 80 } 
+])
+
+SELECT * , stockdata
+FROM orders
+WHERE stockdata IN (SELECT warehouse, instock
+                    FROM warehouse
+                    WHERE stock_item = orders_item
+                    AND instock >= orders.ordered)
+
+
+db.orders.aggregate([
+    {
+        $lookup:
+        {
+            from:'warehouses',
+            let:{order_item:"$item",order_qty:"$ordered"},
+            pipeline:[
+                {
+                    $match:
+                    {
+                        $expr:
+                        {
+                            $and:[
+                                {$eq:["$stock_item","$$order_item"]},
+                                {$gte:["$instock","$$order_qty"]}
+                            ]
+                        }
+                    }
+                },
+                {
+                    $project:{stock_item:0,_id:0}
+                }
+            ],
+            as:"stockdata"
+        }
+    }
+]).pretty()

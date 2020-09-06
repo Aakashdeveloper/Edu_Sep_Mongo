@@ -1,4 +1,4 @@
-[
+db.roomtype.insertMany([
     {
         "_id":1,
         "roomtype":"1",
@@ -19,4 +19,4 @@
         "roomtype":"4",
         "name":"Semi Deluxe Room"
     }
-]
+])
