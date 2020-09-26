@@ -1,1 +1,38 @@
 https://developerhotel.herokuapp.com/
+
+CRUD
+Create Read Update Delete
+
+////////////////////////////
+npm > node package manager
+
+////////
+Step to create package.json
+///////
+**NodeJs installed in your system(https://nodejs.org/en/)
+> Navigate to the folder where you want to create using cmd/terminal
+> type npm init -y
+
+
+
+////////
+Step to install packages
+///////
+> Navigate to the folder where you want to create using cmd/terminal
+> npm i express mongodb body-parser 
+
+
+C Create  > POST
+R Read    > GET
+U Update  > PUT
+D Delete  > Delete
+
+////Step to Run API///////
+> Navigate to the folder where you want to create using cmd/terminal
+> node server.js /nodemon server.js
+
+git init
+git add .
+git commit -m "first commit"
+git remote add origin https://github.com/Aakashdeveloper/node-dashboard.git
+git push -u origin master
